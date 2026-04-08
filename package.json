@@ -1,0 +1,40 @@
+{
+  "name": "@piotrekwitkowski/cloudfront-md-rewrite",
+  "version": "0.1.0",
+  "description": "CDK construct that creates a CloudFront Function to rewrite request URIs to .md when the client sends Accept: text/markdown",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "test": "jest",
+    "prepublishOnly": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/piotrekwitkowski/cloudfront-md-rewrite.git"
+  },
+  "keywords": [
+    "aws",
+    "cdk",
+    "cloudfront",
+    "markdown",
+    "rewrite"
+  ],
+  "author": "Piotrek Witkowski",
+  "license": "MIT",
+  "peerDependencies": {
+    "aws-cdk-lib": "^2.0.0",
+    "constructs": "^10.0.0"
+  },
+  "devDependencies": {
+    "aws-cdk-lib": "^2.0.0",
+    "constructs": "^10.0.0",
+    "typescript": "^5.0.0",
+    "jest": "^29.0.0",
+    "ts-jest": "^29.0.0",
+    "@types/jest": "^29.0.0"
+  }
+}

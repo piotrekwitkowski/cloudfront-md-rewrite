@@ -1,0 +1,8 @@
+src
+test
+tsconfig.json
+jest.config.js
+.github
+.git
+*.ts
+!lib/**/*.d.ts
