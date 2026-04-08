@@ -33,7 +33,7 @@ describe('CDK assertions', () => {
     const app = new cdk.App();
     const stack = new cdk.Stack(app, 'TestStack');
     new MarkdownRewriteFunction(stack, 'MdRewrite', {
-      resources: ['/api/roadmap-data'],
+      resources: ['/api/docs'],
     });
 
     const template = Template.fromStack(stack);
@@ -43,7 +43,7 @@ describe('CDK assertions', () => {
   test('function code contains the serialized resources array', () => {
     const app = new cdk.App();
     const stack = new cdk.Stack(app, 'TestStack');
-    const resources = ['/api/roadmap-data', '/api/products'];
+    const resources = ['/api/docs', '/api/products'];
     new MarkdownRewriteFunction(stack, 'MdRewrite', { resources });
 
     const template = Template.fromStack(stack);
@@ -68,18 +68,18 @@ describe('CDK assertions', () => {
 });
 
 describe('function logic', () => {
-  const handler = buildHandler(['/api/roadmap-data', '/api/products']);
+  const handler = buildHandler(['/api/docs', '/api/products']);
 
   test('no Accept header → no rewrite', () => {
-    const event = makeEvent('/api/roadmap-data');
+    const event = makeEvent('/api/docs');
     const result = handler(event);
-    expect(result.uri).toBe('/api/roadmap-data');
+    expect(result.uri).toBe('/api/docs');
   });
 
   test('Accept: text/markdown + allowlisted path → rewrites to .md', () => {
-    const event = makeEvent('/api/roadmap-data', 'text/markdown');
+    const event = makeEvent('/api/docs', 'text/markdown');
     const result = handler(event);
-    expect(result.uri).toBe('/api/roadmap-data.md');
+    expect(result.uri).toBe('/api/docs.md');
   });
 
   test('Accept: text/markdown + non-allowlisted path → no rewrite', () => {
@@ -95,14 +95,14 @@ describe('function logic', () => {
   });
 
   test('Accept: application/json → no rewrite', () => {
-    const event = makeEvent('/api/roadmap-data', 'application/json');
+    const event = makeEvent('/api/docs', 'application/json');
     const result = handler(event);
-    expect(result.uri).toBe('/api/roadmap-data');
+    expect(result.uri).toBe('/api/docs');
   });
 
   test('Accept: text/markdown, application/json → rewrites (markdown present)', () => {
-    const event = makeEvent('/api/roadmap-data', 'text/markdown, application/json');
+    const event = makeEvent('/api/docs', 'text/markdown, application/json');
     const result = handler(event);
-    expect(result.uri).toBe('/api/roadmap-data.md');
+    expect(result.uri).toBe('/api/docs.md');
   });
 });

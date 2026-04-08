@@ -15,7 +15,7 @@ import { MarkdownRewriteFunction } from '@piotrekwitkowski/cloudfront-md-rewrite
 import { FunctionEventType } from 'aws-cdk-lib/aws-cloudfront';
 
 const mdRewrite = new MarkdownRewriteFunction(this, 'MdRewrite', {
-  resources: ['/api/roadmap-data', '/api/products'],
+  resources: ['/api/docs', '/api/products'],
 });
 
 // Attach to a CloudFront behavior
@@ -47,7 +47,7 @@ Only paths you explicitly list in `resources` are rewritten. Unlisted paths are 
 
 | Property | Type | Description |
 |---|---|---|
-| `resources` | `string[]` | Resource paths that have `.md` versions in the origin (e.g. `['/api/roadmap-data']`) |
+| `resources` | `string[]` | Resource paths that have `.md` versions in the origin (e.g. `['/api/docs']`) |
 
 ### `MarkdownRewriteFunction`
 
