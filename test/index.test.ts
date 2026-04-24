@@ -1,21 +1,9 @@
 import * as cdk from 'aws-cdk-lib';
 import { Match, Template } from 'aws-cdk-lib/assertions';
-import { MarkdownRewriteFunction } from '../src';
+import { MarkdownRewriteFunction, HANDLER_SOURCE } from '../src';
 
 function buildHandler(resources: string[]): (event: any) => any {
-  const code =
-    'var MD_RESOURCES=' +
-    JSON.stringify(resources) +
-    ';' +
-    'function handler(event){' +
-    'var request=event.request;' +
-    'var accept=request.headers.accept?request.headers.accept.value:"";' +
-    'if(accept.indexOf("text/markdown")===-1)return request;' +
-    'var bare=request.uri;' +
-    'if(bare.endsWith(".json"))bare=bare.substring(0,bare.length-5);' +
-    'for(var i=0;i<MD_RESOURCES.length;i++){' +
-    'if(bare===MD_RESOURCES[i]){request.uri=bare+".md";return request;}}' +
-    'return request;}';
+  const code = 'var MD_RESOURCES=' + JSON.stringify(resources) + ';' + HANDLER_SOURCE;
   const fn = new Function(code + '\nreturn handler;');
   return fn();
 }

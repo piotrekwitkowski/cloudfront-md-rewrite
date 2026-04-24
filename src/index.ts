@@ -5,17 +5,22 @@ export interface MarkdownRewriteFunctionProps {
   readonly resources: string[];
 }
 
-const HANDLER_SOURCE = [
-  'function handler(event){',
-  'var request=event.request;',
-  'var accept=request.headers.accept?request.headers.accept.value:"";',
-  'if(accept.indexOf("text/markdown")===-1)return request;',
-  'var bare=request.uri;',
-  'if(bare.endsWith(".json"))bare=bare.substring(0,bare.length-5);',
-  'for(var i=0;i<MD_RESOURCES.length;i++){',
-  'if(bare===MD_RESOURCES[i]){request.uri=bare+".md";return request;}}',
-  'return request;}',
-].join('');
+export const HANDLER_SOURCE = `
+function handler(event) {
+  var request = event.request;
+  var accept = request.headers.accept ? request.headers.accept.value : "";
+  if (accept.indexOf("text/markdown") === -1) return request;
+  var bare = request.uri;
+  if (bare.endsWith(".json")) bare = bare.substring(0, bare.length - 5);
+  for (var i = 0; i < MD_RESOURCES.length; i++) {
+    if (bare === MD_RESOURCES[i]) {
+      request.uri = bare + ".md";
+      return request;
+    }
+  }
+  return request;
+}
+`;
 
 export class MarkdownRewriteFunction extends Construct {
   public readonly function: cloudfront.Function;
