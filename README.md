@@ -14,7 +14,8 @@ npm install @piotrekwitkowski/cloudfront-md-rewrite
 import { MarkdownRewrite } from '@piotrekwitkowski/cloudfront-md-rewrite';
 
 const mdRewrite = new MarkdownRewrite(this, 'MdRewrite', {
-  resources: ['/api/docs', '/api/products'],
+  extensions: ['', '.json'],
+  resources: ['/api/pricing', '/api/status'],
 });
 
 // Attach to a CloudFront behavior
@@ -30,12 +31,10 @@ The construct creates a CloudFront Function (cloudfront-js-1.0, ES5) that inspec
 
 | Condition | Result |
 |---|---|
+| Path not in `resources` | Pass through unchanged |
 | No `text/markdown` in Accept | Pass through unchanged |
-| Allowlisted path, extensionless | Appends `.md` |
-| Allowlisted path, `.json` extension | Strips `.json`, appends `.md` |
-| Path not in allowlist | Pass through unchanged |
-
-Only paths you explicitly list in `resources` are rewritten. Unlisted paths are never touched — no risk of 404s from missing `.md` files on the origin.
+| Extension not in `extensions` | Pass through unchanged |
+| Extension in `extensions` | Strips extension, appends `.md` |
 
 ## API
 
@@ -45,7 +44,8 @@ Implements `cloudfront.FunctionAssociation`, so instances can be passed directly
 
 ### `MarkdownRewriteProps`
 
-- `resources` (`string[]`) — Resource paths that have `.md` versions in the origin (e.g. `['/api/docs']`).
+- `extensions` (`string[]`) — URI extensions to match (e.g. `['', '.json']`). Use `''` for extensionless paths.
+- `resources` (`string[]`) — Resource paths that have `.md` versions in the origin (e.g. `['/api/pricing']`).
 
 ## License
 
