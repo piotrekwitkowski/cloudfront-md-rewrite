@@ -42,6 +42,16 @@ describe('CDK assertions', () => {
     });
   });
 
+  test('throws if a resource path does not start with /', () => {
+    const app = new cdk.App();
+    const stack = new cdk.Stack(app, 'TestStack');
+    expect(() => {
+      new MarkdownRewriteFunction(stack, 'MdRewrite', {
+        resources: ['api/docs'],
+      });
+    }).toThrow(/must start with "\/"/);
+  });
+
   test('empty resources array produces a valid function', () => {
     const app = new cdk.App();
     const stack = new cdk.Stack(app, 'TestStack');

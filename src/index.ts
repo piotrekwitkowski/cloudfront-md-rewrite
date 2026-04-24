@@ -28,6 +28,12 @@ export class MarkdownRewriteFunction extends Construct {
   constructor(scope: Construct, id: string, props: MarkdownRewriteFunctionProps) {
     super(scope, id);
 
+    for (const r of props.resources) {
+      if (!r.startsWith('/')) {
+        throw new Error(`Resource path must start with "/", got: "${r}"`);
+      }
+    }
+
     const code = 'var MD_RESOURCES=' + JSON.stringify(props.resources) + ';' + HANDLER_SOURCE;
 
     this.function = new cloudfront.Function(this, 'Function', {
