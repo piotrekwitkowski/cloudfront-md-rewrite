@@ -39,15 +39,13 @@ Only paths you explicitly list in `resources` are rewritten. Unlisted paths are 
 
 ## API
 
-### `MarkdownRewriteProps`
-
-| Property | Type | Description |
-|---|---|---|
-| `resources` | `string[]` | Resource paths that have `.md` versions in the origin (e.g. `['/api/docs']`) |
-
 ### `MarkdownRewrite`
 
 Implements `cloudfront.FunctionAssociation`, so instances can be passed directly to `functionAssociations`.
+
+### `MarkdownRewriteProps`
+
+- `resources` (`string[]`) — Resource paths that have `.md` versions in the origin (e.g. `['/api/docs']`).
 
 ## License
 
