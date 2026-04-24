@@ -11,9 +11,9 @@ npm install @piotrekwitkowski/cloudfront-md-rewrite
 ## Usage
 
 ```ts
-import { MarkdownRewriteFunction } from '@piotrekwitkowski/cloudfront-md-rewrite';
+import { MarkdownRewrite } from '@piotrekwitkowski/cloudfront-md-rewrite';
 
-const mdRewrite = new MarkdownRewriteFunction(this, 'MdRewrite', {
+const mdRewrite = new MarkdownRewrite(this, 'MdRewrite', {
   resources: ['/api/docs', '/api/products'],
 });
 
@@ -39,13 +39,13 @@ Only paths you explicitly list in `resources` are rewritten. Unlisted paths are 
 
 ## API
 
-### `MarkdownRewriteFunctionProps`
+### `MarkdownRewriteProps`
 
 | Property | Type | Description |
 |---|---|---|
 | `resources` | `string[]` | Resource paths that have `.md` versions in the origin (e.g. `['/api/docs']`) |
 
-### `MarkdownRewriteFunction`
+### `MarkdownRewrite`
 
 Implements `cloudfront.FunctionAssociation`, so instances can be passed directly to `functionAssociations`.
 

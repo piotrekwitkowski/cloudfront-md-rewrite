@@ -1,6 +1,6 @@
 import * as cdk from 'aws-cdk-lib';
 import { Match, Template } from 'aws-cdk-lib/assertions';
-import { MarkdownRewriteFunction, HANDLER_SOURCE } from '../src';
+import { MarkdownRewrite, HANDLER_SOURCE } from '../src';
 
 function buildHandler(resources: string[]): (event: any) => any {
   const code = 'var MD_RESOURCES=' + JSON.stringify(resources) + ';' + HANDLER_SOURCE;
@@ -20,7 +20,7 @@ describe('CDK assertions', () => {
   test('creates a CloudFront Function resource', () => {
     const app = new cdk.App();
     const stack = new cdk.Stack(app, 'TestStack');
-    new MarkdownRewriteFunction(stack, 'MdRewrite', {
+    new MarkdownRewrite(stack, 'MdRewrite', {
       resources: ['/api/docs'],
     });
 
@@ -32,7 +32,7 @@ describe('CDK assertions', () => {
     const app = new cdk.App();
     const stack = new cdk.Stack(app, 'TestStack');
     const resources = ['/api/docs', '/api/products'];
-    new MarkdownRewriteFunction(stack, 'MdRewrite', { resources });
+    new MarkdownRewrite(stack, 'MdRewrite', { resources });
 
     const template = Template.fromStack(stack);
     template.hasResourceProperties('AWS::CloudFront::Function', {
@@ -46,7 +46,7 @@ describe('CDK assertions', () => {
     const app = new cdk.App();
     const stack = new cdk.Stack(app, 'TestStack');
     expect(() => {
-      new MarkdownRewriteFunction(stack, 'MdRewrite', {
+      new MarkdownRewrite(stack, 'MdRewrite', {
         resources: ['api/docs'],
       });
     }).toThrow(/must start with "\/"/);
@@ -55,7 +55,7 @@ describe('CDK assertions', () => {
   test('empty resources array produces a valid function', () => {
     const app = new cdk.App();
     const stack = new cdk.Stack(app, 'TestStack');
-    new MarkdownRewriteFunction(stack, 'MdRewrite', { resources: [] });
+    new MarkdownRewrite(stack, 'MdRewrite', { resources: [] });
 
     const template = Template.fromStack(stack);
     template.resourceCountIs('AWS::CloudFront::Function', 1);

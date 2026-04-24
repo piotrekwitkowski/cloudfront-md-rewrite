@@ -1,7 +1,7 @@
 import { Construct } from 'constructs';
 import * as cloudfront from 'aws-cdk-lib/aws-cloudfront';
 
-export interface MarkdownRewriteFunctionProps {
+export interface MarkdownRewriteProps {
   readonly resources: string[];
 }
 
@@ -22,11 +22,11 @@ function handler(event) {
 }
 `;
 
-export class MarkdownRewriteFunction extends Construct implements cloudfront.FunctionAssociation {
+export class MarkdownRewrite extends Construct implements cloudfront.FunctionAssociation {
   public readonly eventType = cloudfront.FunctionEventType.VIEWER_REQUEST;
   public readonly function: cloudfront.Function;
 
-  constructor(scope: Construct, id: string, props: MarkdownRewriteFunctionProps) {
+  constructor(scope: Construct, id: string, props: MarkdownRewriteProps) {
     super(scope, id);
 
     for (const r of props.resources) {
