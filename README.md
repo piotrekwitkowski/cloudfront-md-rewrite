@@ -12,7 +12,6 @@ npm install @piotrekwitkowski/cloudfront-md-rewrite
 
 ```ts
 import { MarkdownRewriteFunction } from '@piotrekwitkowski/cloudfront-md-rewrite';
-import { FunctionEventType } from 'aws-cdk-lib/aws-cloudfront';
 
 const mdRewrite = new MarkdownRewriteFunction(this, 'MdRewrite', {
   resources: ['/api/docs', '/api/products'],
@@ -21,10 +20,7 @@ const mdRewrite = new MarkdownRewriteFunction(this, 'MdRewrite', {
 // Attach to a CloudFront behavior
 {
   origin,
-  functionAssociations: [{
-    eventType: FunctionEventType.VIEWER_REQUEST,
-    function: mdRewrite.function,
-  }],
+  functionAssociations: [mdRewrite],
 }
 ```
 
@@ -51,9 +47,7 @@ Only paths you explicitly list in `resources` are rewritten. Unlisted paths are 
 
 ### `MarkdownRewriteFunction`
 
-| Property | Type | Description |
-|---|---|---|
-| `function` | `cloudfront.Function` | The CloudFront Function — attach to a behavior's `functionAssociations` |
+Implements `cloudfront.FunctionAssociation`, so instances can be passed directly to `functionAssociations`.
 
 ## License
 

@@ -22,7 +22,8 @@ function handler(event) {
 }
 `;
 
-export class MarkdownRewriteFunction extends Construct {
+export class MarkdownRewriteFunction extends Construct implements cloudfront.FunctionAssociation {
+  public readonly eventType = cloudfront.FunctionEventType.VIEWER_REQUEST;
   public readonly function: cloudfront.Function;
 
   constructor(scope: Construct, id: string, props: MarkdownRewriteFunctionProps) {
