@@ -30,7 +30,7 @@
     "constructs": "^10.0.0"
   },
   "devDependencies": {
-    "aws-cdk-lib": "^2.250.0",
+    "aws-cdk-lib": "^2.251.0",
     "constructs": "^10.6.0",
     "typescript": "^6.0.3",
     "jest": "^30.3.0",
